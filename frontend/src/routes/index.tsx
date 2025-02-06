@@ -4,7 +4,10 @@ import Login from "@/pages/login";
 import LayoutAdmin from "@/components/layouts/admin/layout";
 import Clients from "@/pages/clients";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import CLientProductions from "@/pages/clientProductions";
+import ClientProductions from "@/pages/clientProductions";
+import ClientSoils from "@/pages/clientSoils";
+import PanelCaneSugar from "@/pages/panelsCaneSugar";
+import PanelPalm from "@/pages/panelsPalm";
 
 const AppRoutes = () => {
   return (
@@ -26,7 +29,37 @@ const AppRoutes = () => {
             path="/client_productions"
             element={
               <LayoutAdmin>
-                <CLientProductions />
+                <ClientProductions />
+              </LayoutAdmin>
+            }
+          />
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["user", "admin"]} />}>
+          <Route
+            path="/client_soils"
+            element={
+              <LayoutAdmin>
+                <ClientSoils />
+              </LayoutAdmin>
+            }
+          />
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["user", "admin"]} />}>
+          <Route
+            path="/panel_canesugar"
+            element={
+              <LayoutAdmin>
+                <PanelCaneSugar />
+              </LayoutAdmin>
+            }
+          />
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["user", "admin"]} />}>
+          <Route
+            path="/panel_palm"
+            element={
+              <LayoutAdmin>
+                <PanelPalm />
               </LayoutAdmin>
             }
           />

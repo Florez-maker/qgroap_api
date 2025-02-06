@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { NavMain } from "@/components/layouts/admin/nav-main";
 import { NavUser } from "@/components/layouts/admin/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { PiFarmFill } from "react-icons/pi";
+import { PiProjectorScreenChart } from "react-icons/pi";
 import { GiFarmTractor } from "react-icons/gi";
-import { GiFarmer } from "react-icons/gi";
 import { GiGroundSprout } from "react-icons/gi";
+import { GiSugarCane } from "react-icons/gi";
+import { PiTreePalm } from "react-icons/pi";
+import { PiFarm } from "react-icons/pi";
 
 const data = {
   user: {
@@ -17,23 +19,40 @@ const data = {
   navMain: [
     {
       title: "Clientes",
+      url: "/clients",
+      icon: PiFarm,
+    },
+    {
+      title: "Suelos",
+      url: "/client_soils",
+      icon: GiGroundSprout,
+    },
+    {
+      title: "Producción",
       url: "#",
-      icon: PiFarmFill,
+      icon: GiFarmTractor,
       items: [
         {
-          title: "Clientes",
-          url: "/clients",
-          icon: GiFarmer,
-        },
-        {
-          title: "Producción",
+          title: "Caña de azucar",
           url: "/client_productions",
-          icon: GiFarmTractor,
+          icon: GiSugarCane,
+        },
+      ],
+    },
+    {
+      title: "Paneles",
+      url: "#",
+      icon: PiProjectorScreenChart,
+      items: [
+        {
+          title: "Caña de azucar",
+          url: "/panel_canesugar",
+          icon: GiSugarCane,
         },
         {
-          title: "Suelos",
-          url: "/client_soils",
-          icon: GiGroundSprout,
+          title: "Palma",
+          url: "/panel_palm",
+          icon: PiTreePalm,
         },
       ],
     },

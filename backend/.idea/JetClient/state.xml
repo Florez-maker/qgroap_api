@@ -9,7 +9,7 @@
               <option name="id" value="0036fc3a-1d30-4f33-85a1-1c13bab90aa3" />
               <option name="method" value="GET" />
               <option name="name" value="Draft" />
-              <option name="url" value="http://127.0.0.1:8000/clients/clients/" />
+              <option name="url" value="http://127.0.0.1:8000/clients/client_productions/" />
             </requestState>
           </list>
         </option>

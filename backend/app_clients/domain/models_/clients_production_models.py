@@ -6,6 +6,7 @@ class ClientProduction(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, null=True)
 
     FECHA_COS = models.DateField(null=True)
+    FECHA_SIEM = models.DateField(null=True)
 
     NOM_HAC = models.CharField(max_length=50, blank=True, null=True)
     STE = models.CharField(max_length=50, blank=True, null=True)

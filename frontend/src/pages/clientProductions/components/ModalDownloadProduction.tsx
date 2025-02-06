@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import client_productions_api from "@/api/CLientProductions";
+import client_productions_api from "@/api/ClientProductions";
 import * as XLSX from "xlsx";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -48,21 +48,30 @@ function ModalDownloadProductions({ title }) {
   }, []);
 
   const generateCSV = (data: any[]) => {
-    const header = ["Cliente","TCH","SAC"];
+    const header = ["Cliente","Finca","Suerte","Suerte madre","Variedad","TCH","TCHM","SAC"];
     const rows = data.map((item) => [
       item.client.name,
-
+      item.NOM_HAC,
+      item.STE, 
+      item.STE2,
+      item.VAR,
       item.TCH,
+      item.TCHM,
       item.SAC,
     ]);
     return [header.join(","), ...rows.map(row => row.join(","))].join("\n");
   };
 
   const generateExcel = (data: any[]) => {
-    const header = ["Cliente","TCH","SAC"];
+    const header = ["Cliente","Finca","Suerte","Suerte madre","Variedad","TCH","TCHM","SAC"];
     const rows = data.map((item) => ({
       "Cliente":item.client.name,
+      "NOM_HAC":item.NOM_HAC,
+      "STE":item.STE,
+      "STE2":item.STE2,
+      "VAR":item.VAR,
       "TCH":item.TCH,
+      "TCHM":item.TCHM,
       "SAC":item.SAC,
     }));
 
@@ -93,7 +102,7 @@ function ModalDownloadProductions({ title }) {
 
     toast({
       title: "Descarga completa",
-      description: "Los producciones han sido descargados correctamente.",
+      description: "Las producciones han sido descargadas correctamente.",
     });
   };
 

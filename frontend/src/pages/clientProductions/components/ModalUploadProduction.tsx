@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import clients_api from "@/api/Clients";
-import client_productions_api from "@/api/CLientProductions";
+import client_productions_api from "@/api/ClientProductions";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog";
 import { Upload } from "lucide-react";

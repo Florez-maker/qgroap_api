@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import client_productions_api from "@/api/CLientProductions";
+import client_productions_api from "@/api/ClientProductions";
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { FiChevronDown, FiChevronUp, FiMenu } from "react-icons/fi";
 import { LuPencil } from "react-icons/lu";
@@ -10,11 +10,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import ModalUploadProduction from "./components/ModalUploadProduction";
 import ModalUpdateProduction from "./components/ModalUpdateProduction";
 import ModalDownloadProduction from "./components/ModalDownloadProduction";
-import { TbTransactionDollar } from "react-icons/tb";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
-import {Card, CardHeader, CardTitle, CardContent, CardDescription} from "@/components/ui/card";
 import { GiFarmTractor } from "react-icons/gi";
 
 const formatDateTime = (dateString) => {
@@ -25,7 +23,7 @@ const formatDateTime = (dateString) => {
   })}`;
 };
 
-function CLientProductions() {
+function ClientProductions() {
   const { toast } = useToast();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,20 +58,22 @@ function CLientProductions() {
 
   const columns = [
     { accessorKey: "client.name", header: "Cliente" },
+    {
+      accessorKey: "FECHA_SIEM",
+      header: "Fecha siembra",
+      cell: ({ getValue }) => formatDateTime(getValue()),
+    },
+    {
+      accessorKey: "FECHA_COS",
+      header: "Fecha cosecha",
+      cell: ({ getValue }) => formatDateTime(getValue()),
+    },
+    { accessorKey: "NOM_HAC", header: "Finca" },
+    { accessorKey: "VAR", header: "Variedad" },
+    { accessorKey: "STE", header: "Suerte" },
     { accessorKey: "TCH", header: "TCH" },
+    { accessorKey: "TCHM", header: "TCHM" },
     { accessorKey: "SAC", header: "SAC" },
-
-    { accessorKey: "updated_by_username", header: "Actualizado Por", width: 100 },
-    {
-      accessorKey: "created_at",
-      header: "Fecha de Creación",
-      cell: ({ getValue }) => formatDateTime(getValue()),
-    },
-    {
-      accessorKey: "updated_at",
-      header: "Fecha de Actualización",
-      cell: ({ getValue }) => formatDateTime(getValue()),
-    },
     {
       accessorKey: "actions",
       header: "Acciones",
@@ -156,6 +156,18 @@ function CLientProductions() {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
+
+  const haciendas = [...new Set(data.map((item) => item.NOM_HAC))];
+  const traces = haciendas.map((hacienda) => {
+    const filteredData = data.filter((item) => item.NOM_HAC === hacienda);
+    return {
+      x: filteredData.map((item) => item.STE),
+      y: filteredData.map((item) => item.TCH),
+      type: "scatter",
+      mode: "lines+markers",
+      name: hacienda,
+    };
+  });
 
   return (
     <>
@@ -284,8 +296,9 @@ function CLientProductions() {
           });
         }}
       />
+
     </>
   )
 }
 
-export default CLientProductions;
+export default ClientProductions;

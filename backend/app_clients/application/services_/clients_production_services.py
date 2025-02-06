@@ -1,12 +1,12 @@
+from datetime import datetime
 import numpy as np
 import pandas as pd
+from django.db import transaction
 from app_clients.api.serializers_.clients_production_serializers import ClientProductionSerializer
-from app_clients.domain.models_.clients_models import Client
 from app_clients.domain.models_.clients_production_models import ClientProduction
 from app_clients.infraestructure.repositories_.clients_production_repositories import ClientProductionRepository
 from app_clients.infraestructure.repositories_.clients_repositories import ClientRepository
 from django.core.exceptions import ValidationError
-from django.db import transaction
 
 class ClientProductionService:
 
@@ -132,6 +132,17 @@ class ClientProductionService:
 
                 for index, row in df.iterrows():
                     try:
+
+                        def clean_date(value):
+                            try:
+                                date_value = pd.to_datetime(value, errors='coerce')
+                                return date_value.date() if pd.notna(date_value) else None
+                            except Exception:
+                                return None
+
+                        FECHA_COS = clean_date(row.get('FECHA_COS'))
+                        FECHA_SIE = clean_date(row.get('FECHA_SIE'))
+
                         NOM_HAC = str(row['NOM_HAC'])
                         STE = str(row['STE'])
                         STE2 = str(row['STE2'])
@@ -145,9 +156,10 @@ class ClientProductionService:
                         TAH = np.round(row['TAH'],2)
                         TAHM = np.round(row['TAHM'],2)
                         REND_COM = np.round(row['REND_COM'],2)
-                        MAT_EXT = np.round(row['MAT_EXT'],2)
 
                         production_data = {
+                            'FECHA_COS': FECHA_COS,
+                            'FECHA_SIE': FECHA_SIE,
                             'NOM_HAC': NOM_HAC,
                             'STE': STE,
                             'STE2': STE2,
@@ -161,7 +173,6 @@ class ClientProductionService:
                             'TAH': TAH,
                             'TAHM': TAHM,
                             'REND_COM': REND_COM,
-                            'MAT_EXT': MAT_EXT,
                             'client_id': client_id,
                         }
 

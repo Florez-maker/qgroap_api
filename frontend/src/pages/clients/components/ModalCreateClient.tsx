@@ -79,12 +79,12 @@ function ModalCreateClient({ title, callback, onSuccess }) {
           <CirclePlus /> {title}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[400px]">
+      <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
           <DialogTitle className="text-center">Crear cliente</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-2 mt-8">
             <FormField
               control={form.control}
               name="name"
@@ -126,12 +126,12 @@ function ModalCreateClient({ title, callback, onSuccess }) {
             />
             <FormField
               control={form.control}
-              name="city"
+              name="state"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Ciudad</FormLabel>
+                  <FormLabel>Estado</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ingrese la ciudad" {...field} />
+                    <Input placeholder="Ingrese el estado" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -139,12 +139,12 @@ function ModalCreateClient({ title, callback, onSuccess }) {
             />
             <FormField
               control={form.control}
-              name="state"
+              name="city"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Estado</FormLabel>
+                  <FormLabel>Ciudad</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ingrese el estado" {...field} />
+                    <Input placeholder="Ingrese la ciudad" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -189,7 +189,7 @@ function ModalCreateClient({ title, callback, onSuccess }) {
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <DialogFooter className={"flex gap-2 col-span-2 justify-end"}>
               <Button type="submit" disabled={loading}>
                 {loading ? "Guardando..." : "Guardar"}
               </Button>

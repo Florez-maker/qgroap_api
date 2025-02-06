@@ -14,7 +14,7 @@ class ClientProductionView(APIView):
             if client_production_id:
                 client_production = self.client_production_service.get_client_production_by_id(client_production_id)
                 if not client_production:
-                    return Response({"error": "Movement Type not found"}, status=status.HTTP_404_NOT_FOUND)
+                    return Response({"error": "Client production not found"}, status=status.HTTP_404_NOT_FOUND)
                 serializer_client_production = ClientProductionSerializer(client_production)
                 return Response({"client_production": serializer_client_production.data}, status=status.HTTP_200_OK)
             else:

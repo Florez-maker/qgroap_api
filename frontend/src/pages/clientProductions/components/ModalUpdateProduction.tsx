@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import client_productions_api from "@/api/CLientProductions";
+import client_productions_api from "@/api/ClientProductions";
 import clients_api from "@/api/Clients";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select"
 
 const productionSchema = z.object({
   client_id: z.string().min(1, { message: "Debe seleccionar una cuenta" }),
   TCH: z.string().min(1),
+  SAC: z.string().min(1),
 });
 
 type Production = z.infer<typeof productionSchema>;
@@ -34,7 +35,7 @@ const ModalUpdateProduction: React.FC<ModalUpdateProductionProps> = ({
     defaultValues: {
       client_id: "",
       TCH: "",
-
+      SAC: "",
     },
   });
 
@@ -70,6 +71,7 @@ const ModalUpdateProduction: React.FC<ModalUpdateProductionProps> = ({
       const payload = {
         client_id: Number(formData.client_id),
         TCH: formData.TCH,
+        SAC: formData.SAC,
       };
 
       const updatedProduction = await client_productions_api.update(data.id, payload);
@@ -103,7 +105,7 @@ const ModalUpdateProduction: React.FC<ModalUpdateProductionProps> = ({
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger id="client_id" className="w-full">
-                        <SelectValue placeholder="Selecciona una cuenta bancaria" />
+                        <SelectValue placeholder="Selecciona un cliente" />
                       </SelectTrigger>
                       <SelectContent>
                         {clients?.map((row: any) => (
@@ -118,8 +120,6 @@ const ModalUpdateProduction: React.FC<ModalUpdateProductionProps> = ({
                 </FormItem>
               )}
             />
-
-
 
             <DialogFooter className="col-span-3" >
               <Button type="submit" disabled={loading}>

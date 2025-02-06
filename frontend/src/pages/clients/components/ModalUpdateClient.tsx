@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
+import clientcropsapi from "@/api/ClientCrops";
 import clientsapi from "@/api/Clients";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+
+
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import clientcropsapi from "@/api/ClientCrops";
+
+
+
+
 
 const clientSchema = z.object({
   name: z.string().min(1, "El nombre es obligatorio"),
@@ -31,7 +38,6 @@ interface ModalUpdateClientProps {
 }
 
 const ModalUpdateClient: React.FC<ModalUpdateClientProps> = ({ data, openDialog, setOpenDialog, onUpdate }) => {
-
   const form = useForm<Client>({
     resolver: zodResolver(clientSchema),
     defaultValues: {
@@ -45,7 +51,11 @@ const ModalUpdateClient: React.FC<ModalUpdateClientProps> = ({ data, openDialog,
     },
   });
 
-  const { reset, handleSubmit, formState: { errors } } = form;
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = form;
   const [loading, setLoading] = useState(false);
   const [updateError, setUpdateError] = useState<string | null>(null);
   const [clientCrops, setClientCrops] = useState([]);
@@ -106,12 +116,12 @@ const ModalUpdateClient: React.FC<ModalUpdateClientProps> = ({ data, openDialog,
 
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-      <DialogContent className="sm:max-w-[400px]">
+      <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
           <DialogTitle className="text-center">Actualizar cliente</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-2">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 grid grid-cols-2 gap-2">
             <FormField
               control={form.control}
               name="name"
@@ -208,15 +218,12 @@ const ModalUpdateClient: React.FC<ModalUpdateClientProps> = ({ data, openDialog,
                 <FormItem className="flex items-center gap-2">
                   <FormLabel className="cursor-pointer">Activo</FormLabel>
                   <FormControl>
-                    <Checkbox
-                      checked={field.value || false}
-                      onCheckedChange={(checked) => field.onChange(checked)}
-                    />
+                    <Checkbox checked={field.value || false} onCheckedChange={(checked) => field.onChange(checked)} />
                   </FormControl>
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <DialogFooter className={"col-span-2 flex justify-end gap-2"}>
               <Button type="submit" disabled={loading}>
                 {loading ? "Guardando..." : "Guardar"}
               </Button>

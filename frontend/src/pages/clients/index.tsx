@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import ModalCreateClient from "./components/ModalCreateClient";
 import ModalUpdateClient from "./components/ModalUpdateClient";
-import { GiFarmer } from "react-icons/gi";
+import { PiFarm } from "react-icons/pi";
 
 const formatDateTime = (dateString) => {
   const date = new Date(dateString);
@@ -185,7 +185,7 @@ function Clients() {
 
         <div className="mb-4 flex justify-between text-sm bg-gray-50 rounded-md p-4">
             <span className="flex items-center gap-2 text-lg font-semibold">
-            <GiFarmer /> Clientes
+            <PiFarm /> Clientes
             </span>
           <div className="flex gap-2">
             <ModalCreateClient
